@@ -1,19 +1,16 @@
 import jwt from 'jsonwebtoken'
 import { config } from "../config/auth.config.js";
+import { prisma } from "../config/db.js";
+
 
 export const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization
-  console.log(authHeader)
-
   if (!authHeader) {
     return res.status(403).send({
       message: "No token provided!"
     });
   }
-
   const token = authHeader.split(' ')[1]
-  console.log(token)
-
   jwt.verify(token,
     config.secret,
     (err, decoded) => {
@@ -28,6 +25,12 @@ export const verifyToken = (req, res, next) => {
 };
 
 // isAdmin = (req, res, next) => {
+//   const id = req.params.id
+//   const admin = prisma.admin.findFirst({
+//     where: {
+//       id: parseInt
+//     }
+//   })
 //   User.findByPk(req.userId).then(user => {
 //     user.getRoles().then(roles => {
 //       for (let i = 0; i < roles.length; i++) {
