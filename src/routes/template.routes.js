@@ -11,7 +11,7 @@ import {
 
 const router = Router();
 
-router.get('/templates', [authJwt.verifyToken], async (req, res) => {
+router.get('/templates',  async (req, res) => {
   await getAllTemplates(req, res)
 })
 
@@ -23,7 +23,7 @@ router.post('/templates', [authJwt.verifyToken], async (req, res) => {
   await createTemplate(req, res)
 })
 
-router.get('/templates/:id', [authJwt.verifyToken], async (req, res) => {
+router.get('/templates/:id', async (req, res) => {
   await getTemplateById(req, res)
 })
 
