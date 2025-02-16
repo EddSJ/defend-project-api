@@ -23,7 +23,9 @@ model Admin {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   templates Template[]
+  comments Comment[]
   completedTemplates CompletedTemplate[]
+  likedTemplates Template[] @relation("TemplateLikes")
   @@index([email])
 }
 
@@ -43,6 +45,9 @@ model Template {
   questions Question[]
   completedTemplates CompletedTemplate[]
   isPublic Boolean @default(true)
+  comments    Comment[]
+  likes Int @default(0)
+  likedBy Admin[] @relation("TemplateLikes") 
   @@index([name])
 }
 
@@ -85,4 +90,15 @@ model CompletedTemplate {
   answers Answer[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  content String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  template Template @relation(fields: [templateId], references: [id])
+  templateId Int
+  author Admin @relation(fields: [authorId], references: [id])
+  authorId Int 
 }

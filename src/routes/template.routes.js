@@ -6,7 +6,13 @@ import {
   createTemplate, 
   getTemplateById, 
   updateTemplate,
-  deleteTemplate 
+  deleteTemplate,
+  likeTemplate,
+  unlikeTemplate,
+  addCommentTotemplate,
+  deleteCommentFromTemplate,
+  getTemplateLikes,
+  getTemplateComments
 } from "../controller/template.controller.js";
 
 const router = Router();
@@ -35,6 +41,29 @@ router.put('/templates/:id', [authJwt.verifyToken], async (req, res) => {
   await updateTemplate(req, res)
 })
 
+router.post('/templates/:id/like', [authJwt.verifyToken], async (req, res) => {
+  await likeTemplate(req, res)
+})
+
+router.post('/templates/:id/unlike', [authJwt.verifyToken], async (req, res) => {
+  await unlikeTemplate(req, res)
+})
+
+router.post('/templates/:id/comment', [authJwt.verifyToken], async (req, res) => {
+  await addCommentTotemplate(req, res)
+})
+
+router.delete('/comments/:commentId', [authJwt.verifyToken], async (req, res) => {
+  await deleteCommentFromTemplate(req, res)
+})
+
+router.get('/templates/:id/like', async (req, res) => {
+  await getTemplateLikes(req, res)
+})
+
+router.get('/templates/:id/comment', async (req, res) => {
+  await getTemplateComments(req, res)
+})
 
 
 export default router;

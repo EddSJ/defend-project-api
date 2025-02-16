@@ -62,3 +62,25 @@ export const signin = async (req, res) => {
     res.status(500).json({ message: "An error occurred while signing in.", error: err.message });
   }
 }
+
+export const validateToken = (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(403).send({
+      message: "No token provided!"
+    });
+  }
+
+  const token = authHeader.split(' ')[1];
+  jwt.verify(token, config.secret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({
+        message: "Unauthorized!",
+      });
+    }
+    return res.status(200).send({
+      message: "Token is valid!",
+      userId: decoded.id
+    });
+  });
+};
