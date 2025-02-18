@@ -90,47 +90,18 @@ export const getTemplateById = async (req, res) => {
 export const updateTemplate = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const { name, description, isPublic, questions, adminId } = req.body;
-    const data = {
-      name,
-      description,
-      isPublic,
-      adminId,
-      questions: {
-        deleteMany: {
-          id: {
-            notIn: questions.map((q) => q.id).filter((id) => id),
-          },
-        },
-        upsert: questions.map((q) => ({
-          where: { id: q.id || -1 },
-          update: {
-            question: q.question,
-            type: q.type,
-            options: q.options,
-          },
-          create: {
-            question: q.question,
-            type: q.type,
-            options: q.options,
-          },
-        })),
-      },
-    };
-
+    const data = req.body;
     const updatedTemplate = await prisma.template.update({
       where: { id },
       data,
       include: {
         admin: true,
-        questions: true,
-      },
+        questions: true
+      }
     });
-
     if (!updatedTemplate) {
       return res.status(404).json({ message: "Template not found" });
     }
-
     res.status(200).json(updatedTemplate);
   } catch (err) {
     console.error(err);
