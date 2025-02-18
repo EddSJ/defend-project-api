@@ -1,6 +1,15 @@
 import { Router } from "express";
 import { authJwt } from "../middleware/authJwt.js"
-import { getAdmins, createAdmin, getAdmin, deleteAdmin, updateAdmin } from "../controller/admin.controller.js";
+import { 
+  getAdmins, 
+  createAdmin, 
+  getAdmin, 
+  deleteAdmin, 
+  deleteAdmins, 
+  updateAdmin, 
+  blockAdmins, 
+  unblockAdmins
+} from "../controller/admin.controller.js";
 
 const router = Router();
 
@@ -24,6 +33,16 @@ router.put('/admin/:id', [authJwt.verifyToken], async (req, res) => {
   await updateAdmin(req, res)
 })
 
+router.post('/admin/block', [authJwt.verifyToken], async (req, res) => {
+  await blockAdmins(req, res)
+})
 
+router.post('/admin/unblock', [authJwt.verifyToken], async (req, res) => {
+  await unblockAdmins(req, res)
+})
+
+router.post('/admins/delete', [authJwt.verifyToken], async (req, res) => {
+  await deleteAdmins(req, res)
+})
 
 export default router;

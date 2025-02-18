@@ -26,6 +26,7 @@ model Admin {
   comments Comment[]
   completedTemplates CompletedTemplate[]
   likedTemplates Template[] @relation("TemplateLikes")
+  isBlocked Boolean @default(false)
   @@index([email])
 }
 
