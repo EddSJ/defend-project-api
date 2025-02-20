@@ -26,7 +26,9 @@ export const getTemplatesByAdmin = async (req, res) => {
       },
       include: {
         admin: true,
-        questions: true
+        questions: true,
+        likedBy: true,
+        comments: true
       }
     });
     res.status(200).json(templates);

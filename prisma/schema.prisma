@@ -43,10 +43,10 @@ model Template {
   updatedAt DateTime @updatedAt
   admin Admin @relation(fields: [adminId], references: [id])
   adminId Int
-  questions Question[]
+  questions Question[] 
   completedTemplates CompletedTemplate[]
   isPublic Boolean @default(true)
-  comments    Comment[]
+  comments Comment[] 
   likes Int @default(0)
   likedBy Admin[] @relation("TemplateLikes") 
   @@index([name])
@@ -55,13 +55,13 @@ model Template {
 model Question {
   id Int @id @default(autoincrement())
   question String
-  template Template @relation(fields: [templateId], references: [id])
+  template Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
   templateId Int
   type QuestionType
   options String[] 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  answers Answer[]
+  answers Answer[] 
 }
 
 enum QuestionType  {
@@ -74,9 +74,9 @@ enum QuestionType  {
 model Answer {
   id Int @id @default(autoincrement())
   answer String
-  question Question @relation(fields: [questionId], references: [id])
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId Int
-  completedTemplate CompletedTemplate @relation(fields: [completedTemplateId], references: [id])
+  completedTemplate CompletedTemplate @relation(fields: [completedTemplateId], references: [id], onDelete: Cascade)
   completedTemplateId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -84,9 +84,9 @@ model Answer {
 
 model CompletedTemplate {
   id Int @id @default(autoincrement())
-  template Template @relation(fields: [templateId], references: [id])
+  template Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
   templateId Int
-  admin Admin @relation(fields: [adminId], references: [id])
+  admin Admin @relation(fields: [adminId], references: [id], onDelete: Cascade)
   adminId Int
   answers Answer[]
   createdAt DateTime @default(now())
@@ -98,8 +98,8 @@ model Comment {
   content String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  template Template @relation(fields: [templateId], references: [id])
+  template Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
   templateId Int
-  author Admin @relation(fields: [authorId], references: [id])
+  author Admin @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int 
 }
