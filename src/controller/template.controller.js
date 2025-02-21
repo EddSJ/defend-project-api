@@ -1,8 +1,15 @@
 import { prisma } from "../config/db.js";
 
 export const getAllTemplates = async (req, res) => {
+  const { search } = req.query;
   try {
     const templates = await prisma.template.findMany({
+      where: {
+        name: {
+          contains: search || "",
+          mode: 'insensitive'
+        }
+      },
       include: {
         admin: true,
         questions: true,
@@ -15,14 +22,19 @@ export const getAllTemplates = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "An error occurred while fetching templates.", error: err.message });
   }
-};
+}; 
 
 export const getTemplatesByAdmin = async (req, res) => {
+  const adminId = parseInt(req.params.adminId);
+  const { search } = req.query;
   try {
-    const adminId = parseInt(req.params.adminId);
     const templates = await prisma.template.findMany({
       where: {
-        adminId: adminId
+        adminId: adminId,
+        name: {
+          contains: search || "",
+          mode: "insensitive"
+        }
       },
       include: {
         admin: true,
