@@ -8,13 +8,7 @@ import completedTemplateRoutes from './routes/completedTemplate.routes.js';
 
 const app = express();
 
-const corsOptions = {
-  origin: 'https://api-defend.netlify.app/',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type, Authorization'
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 app.use('/api', authRoutes);
