@@ -105,13 +105,36 @@ export const updateTemplate = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const data = req.body;
+    const { adminId, questions, ...restData } = data;
+    if (adminId) {
+      restData.admin = {
+        connect: { id: adminId },
+      };
+    }
+    if (questions) {
+      restData.questions = {
+        upsert: questions.map((question) => ({
+          where: { id: question.id || -1 },
+          update: {
+            question: question.question,
+            type: question.type,
+            options: question.options,
+          },
+          create: {
+            question: question.question,
+            type: question.type,
+            options: question.options,
+          },
+        })),
+      };
+    }
     const updatedTemplate = await prisma.template.update({
       where: { id },
-      data,
+      data: restData,
       include: {
         admin: true,
-        questions: true
-      }
+        questions: true,
+      },
     });
     if (!updatedTemplate) {
       return res.status(404).json({ message: "Template not found" });
