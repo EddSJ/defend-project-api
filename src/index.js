@@ -9,8 +9,9 @@ import completedTemplateRoutes from './routes/completedTemplate.routes.js';
 const app = express();
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200
+  origin: 'https://api-defend.netlify.app/',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization'
 };
 
 app.use(cors(corsOptions));
