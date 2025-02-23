@@ -2,10 +2,10 @@ const express = require('express');
 const serverless = require('serverless-http');
 const app = express();
 
-const authRoutes = require('./routes/auth.routes');
-const adminRoutes = require('./routes/admin.routes');
-const templateRoutes = require('./routes/template.routes');
-const completedTemplateRoutes = require('./routes/completedTemplate.routes');
+const authRoutes = require('../src/routes/auth.routes');
+const adminRoutes = require('../src/routes/admin.routes');
+const templateRoutes = require('../src/routes/template.routes');
+const completedTemplateRoutes = require('../src/routes/completedTemplate.routes');
 
 app.use(express.json());
 
