@@ -1,11 +1,11 @@
-const express = require('express');
-const serverless = require('serverless-http');
-const cors = require('cors');
+import express from 'express';
+import serverless from 'serverless-http';
+import cors from 'cors';
 
-const authRoutes = require('../src/routes/auth.routes');
-const adminRoutes = require('../src/routes/admin.routes');
-const templateRoutes = require('../src/routes/template.routes');
-const completedTemplateRoutes = require('../src/routes/completedTemplate.routes');
+import authRoutes from '../src/routes/auth.routes.js';
+import adminRoutes from '../src/routes/admin.routes.js';
+import templateRoutes from '../src/routes/template.routes.js';
+import completedTemplateRoutes from '../src/routes/completedTemplate.routes.js';
 
 const app = express();
 
@@ -17,4 +17,4 @@ app.use('/api', adminRoutes);
 app.use('/api', templateRoutes);
 app.use('/api', completedTemplateRoutes);
 
-module.exports.handler = serverless(app);
+export const handler = serverless(app);
