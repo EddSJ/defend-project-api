@@ -17,7 +17,7 @@ router.get('/admins', [authJwt.verifyToken], async (req, res) => {
   await getAdmins(req, res)
 })
 
-router.post('/admins', [authJwt.verifyToken], async (req, res) => {
+router.post('/admins', async (req, res) => {
   await createAdmin(req, res)
 })
 
